@@ -44,7 +44,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo rm -rf /var/www/*
+            sudo rm -rf /var
 
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@v0.1.4
