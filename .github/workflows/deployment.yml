@@ -48,15 +48,6 @@ jobs:
           script: |
             sudo rm -rf /var/www/*
 
-      # - name: Create target directory on EC2 instance
-      #   uses:  appleboy/ssh-action@v0.1.10
-      #   with:
-      #     host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
-      #     username: ubuntu
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     script: |
-      #       sudo mkdir -p /var/www/
-
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -68,7 +59,6 @@ jobs:
           source: build
           target: /var/www/
 
-
       - name: SSH into EC2 instance and restart web server
         uses: appleboy/ssh-action@master
         with:
@@ -77,9 +67,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  # Store the PEM file contents as a secret named 'EC2_SSH_KEY'
 
           # Set environment variables before running the application
-          # env:
-          #   REACT_APP_VERSION: "1"
-          #   INCREMENTAL_VAR: ${{ steps.increment.outputs.count }}
+          envs: |
+            REACT_APP_VERSION: ${{ steps.increment.outputs.count }}
+            # INCREMENTAL_VAR: ${{ steps.increment.outputs.count }}
 
           # The commands below can be modified based on your specific web server and configuration
           script: |
