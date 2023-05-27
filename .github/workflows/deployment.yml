@@ -15,6 +15,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: exit 1
+
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -81,36 +84,32 @@ jobs:
         run: |
           echo "::set-output name=count::$(( ${{ github.run_number }} + 1 ))"
 
-      # - name: Send Slack Notification - Success
-      #   if: success()
-      #   uses: rtCamp/action-slack-notify@v2
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #   with:
-      #     status: 'success'
-      #     message: 'Deployment to AWS EC2 is complete!'
-      #     mention: 'channel' # Optional - mention specific channel or user
-      #     fields: |
-      #       [
-      #         {
-      #           "title": "Deployment Summary",
-      #           "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
-      #         }
-      #       ]
 
-      # - name: Send Slack Notification - Failure
-      #   if: failure()
-      #   uses: rtCamp/action-slack-notify@v2
-      #   env:
-      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      #   with:
-      #     status: 'failure'
-      #     message: 'Deployment to AWS EC2 has failed!'
-      #     mention: '@lukman balogun' # Optional - mention specific channel or user
-      #     fields: |
-      #       [
-      #         {
-      #           "title": "Deployment Summary",
-      #           "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
-      #         }
-      #       ]
+      - name: Send Slack Notification - Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          status: 'failure'
+          message: 'Deployment to AWS EC2 has failed!'
+          mention: '@lukman balogun' # Optional - mention specific channel or user
+          fields: |
+            [
+              {
+                "title": "Deployment Summary",
+                "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
+              }
+            ]
+
+      - name: Slack Notification 
+        if: alway()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: test-dashboard
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_MESSAGE: "${{ github.event.head_commit.message }}"
+          SLACK_TITLE: Test Deployment
+          SLACK_USERNAME: rtCamp
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
