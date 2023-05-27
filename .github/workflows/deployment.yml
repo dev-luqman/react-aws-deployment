@@ -47,6 +47,7 @@ jobs:
           # The source path should be modified based on your React application's build output directory
           source: build
           target: /var/www/
+          args: -r -f
 
       - name: SSH into EC2 instance and restart web server
         uses: appleboy/scp-action@v0.1.4
@@ -95,7 +96,7 @@ jobs:
         with:
           status: 'failure'
           message: 'Deployment to AWS EC2 has failed!'
-          mention: 'lukman balogun' # Optional - mention specific channel or user
+          mention: 'channel' # Optional - mention specific channel or user
           fields: |
             [
               {
