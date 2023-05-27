@@ -56,9 +56,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  # Store the PEM file contents as a secret named 'EC2_SSH_KEY'
 
           # Set environment variables before running the application
-          env:
-            REACT_APP_VERSION: 1:0:0
-            INCREMENTAL_VAR: ${{ steps.increment.outputs.count }}
+          # env:
+          #   REACT_APP_VERSION: "1"
+          #   INCREMENTAL_VAR: ${{ steps.increment.outputs.count }}
 
           # The commands below can be modified based on your specific web server and configuration
           script: |
