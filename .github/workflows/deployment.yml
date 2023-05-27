@@ -53,7 +53,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo mkdir /var/www/build
+            sudo mkdir /var/www/
 
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@v0.1.4
@@ -63,8 +63,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           # The source path should be modified based on your React application's build output directory
-          source: build/*
-          target: /var/www/build/
+          source: build
+          target: /var/www/
 
 
       - name: SSH into EC2 instance and restart web server
