@@ -38,7 +38,7 @@ jobs:
         run: npm run build
 
       - name: Copy files to EC2 instance
-        uses: appleboy/scp-action@v0.3.0
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
           username: ubuntu
@@ -49,7 +49,7 @@ jobs:
           target: /var/www/
 
       - name: SSH into EC2 instance and restart web server
-        uses: appleboy/ssh-action@v0.4.0
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
           username: ubuntu
