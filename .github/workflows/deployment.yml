@@ -103,7 +103,7 @@ jobs:
             ]
 
       - name: Slack Notification 
-        if: alway()
+        if: always()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: test-dashboard
