@@ -53,7 +53,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo mkdir -p /var/www/build
+            sudo mkdir /var/www/build
 
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@v0.1.4
