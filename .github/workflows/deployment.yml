@@ -37,17 +37,26 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Delete existing files on EC2 instance
+        uses: appleboy/ssh-action@v0.4.0
+        with:
+          host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo rm -rf /var/www/*
+
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
           username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}  # Store the PEM file contents as a secret named 'EC2_SSH_KEY'
+          key: ${{ secrets.EC2_SSH_KEY }}
 
           # The source path should be modified based on your React application's build output directory
-          source: build
+          source: build/
           target: /var/www/
-          args: -r -f
+
 
       - name: SSH into EC2 instance and restart web server
         uses: appleboy/scp-action@v0.1.4
