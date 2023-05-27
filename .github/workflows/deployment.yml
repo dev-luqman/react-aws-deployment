@@ -47,7 +47,7 @@ jobs:
             sudo rm -rf /var/www/*
 
       - name: Create target directory on EC2 instance
-        uses: appleboy/ssh-action@master
+        uses:  appleboy/ssh-action@v0.1.10
         with:
           host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
           username: ubuntu
