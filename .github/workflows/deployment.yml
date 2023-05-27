@@ -40,7 +40,7 @@ jobs:
       - name: Delete existing files on EC2 instance
         uses: appleboy/ssh-action@master
         with:
-          host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
+          host: ec2-13-59-251-73.us-east-2.compute.amazonaws.com
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
@@ -90,36 +90,36 @@ jobs:
         run: |
           echo "::set-output name=count::$(( ${{ github.run_number }} + 1 ))"
 
-      - name: Send Slack Notification - Success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        with:
-          status: 'success'
-          message: 'Deployment to AWS EC2 is complete!'
-          mention: 'channel' # Optional - mention specific channel or user
-          fields: |
-            [
-              {
-                "title": "Deployment Summary",
-                "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
-              }
-            ]
+      # - name: Send Slack Notification - Success
+      #   if: success()
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #   with:
+      #     status: 'success'
+      #     message: 'Deployment to AWS EC2 is complete!'
+      #     mention: 'channel' # Optional - mention specific channel or user
+      #     fields: |
+      #       [
+      #         {
+      #           "title": "Deployment Summary",
+      #           "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
+      #         }
+      #       ]
 
-      - name: Send Slack Notification - Failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        with:
-          status: 'failure'
-          message: 'Deployment to AWS EC2 has failed!'
-          mention: 'channel' # Optional - mention specific channel or user
-          fields: |
-            [
-              {
-                "title": "Deployment Summary",
-                "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
-              }
-            ]
+      # - name: Send Slack Notification - Failure
+      #   if: failure()
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #   with:
+      #     status: 'failure'
+      #     message: 'Deployment to AWS EC2 has failed!'
+      #     mention: 'channel' # Optional - mention specific channel or user
+      #     fields: |
+      #       [
+      #         {
+      #           "title": "Deployment Summary",
+      #           "value": "Count: ${{ steps.increment.outputs.count }} | Branch: ${{ github.ref }} | Commit Message: ${{ github.event.head_commit.message }}"
+      #         }
+      #       ]
