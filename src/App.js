@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Updated app from Nryde</p>
-        APP Version {process.env.REACT_APP_VERSION}
+        App Version {process.env.REACT_APP_VERSION}
       </header>
     </div>
   );

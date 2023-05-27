@@ -15,9 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: exit 1
-
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -110,6 +107,6 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_MESSAGE: "${{ github.event.head_commit.message }}"
-          SLACK_TITLE: Test Deployment
+          SLACK_TITLE: Dev Server Deployment
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
