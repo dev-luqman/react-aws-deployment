@@ -82,8 +82,8 @@ jobs:
 
           # The commands below can be modified based on your specific web server and configuration
           script: |
-            sudo systemctl restart nginx
-            sudo systemctl restart apache2
+            sudo service nginx stop
+            sudo service nginx start
 
       - name: Increment Variable
         id: increment
