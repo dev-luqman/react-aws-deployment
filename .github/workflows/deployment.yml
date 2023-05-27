@@ -44,7 +44,17 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo rm -rf /var
+            sudo rm -rf /var/www/*
+
+      - name: Create target directory on EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ec2-3-145-35-131.us-east-2.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo mkdir -p /var/www/
+            sudo chown -R ubuntu:ubuntu /var/www/
 
       - name: Copy files to EC2 instance
         uses: appleboy/scp-action@v0.1.4
